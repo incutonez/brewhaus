@@ -12,6 +12,8 @@
     "build": "vue-tsc -b && vite build --mode=GitHubPages",
     "preview": "vite preview",
     "lint": "npx eslint --fix",
+    "update:deps": "node ./updateDependencies.js",
+    "update:versions": "node ./updateVersions.js",
     "prepare": "husky"
   },
   "dependencies": {
