@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/incutonez/brewhaus/compare/v1.0.0...v1.1.0) (2025-05-13)
+
+### Features
+
+* Adding Features ([87ceff0](https://github.com/incutonez/brewhaus/commit/87ceff0a2e4605b6629b8febe7aed26e712d88e0))
+* Adding Features ([#3](https://github.com/incutonez/brewhaus/issues/3)) ([8b54830](https://github.com/incutonez/brewhaus/commit/8b5483043ddc3d5d495072da10cd7d8ca8a3f1b0))
+
 ## 1.0.0 (2025-05-12)
 
 ### Features
