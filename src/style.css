@@ -8,3 +8,70 @@
 @theme {
     --default-font-family: "Open Sans";
 }
+
+html, body, #app {
+    @apply size-full;
+}
+
+body:has(dialog[open]),
+body:has(.loading-mask) {
+    #app {
+        @apply blur-xs pointer-events-none;
+    }
+}
+
+@layer components {
+    .base-button {
+        @apply px-2 py-1 inline-flex cursor-pointer select-none items-center justify-center overflow-hidden relative text-sm transition-colors duration-200 rounded-md disabled:cursor-not-allowed;
+
+        &.button-normal {
+            @apply bg-sky-200 font-semibold enabled:hover:bg-sky-300 enabled:active:bg-sky-300 text-gray-800 border border-gray-500
+            focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-offset-sky-500 focus:ring-offset-1
+            focus:ring-sky-400;
+        }
+
+        &.button-danger {
+            @apply bg-red-700 font-semibold enabled:hover:bg-red-900 enabled:active:bg-red-300 text-white border border-gray-500
+            focus:outline-none focus:outline-offset-0 focus:ring-1 focus:ring-offset-red-500 focus:ring-offset-1
+            focus:ring-red-400;
+
+            & > svg {
+                @apply fill-white;
+            }
+        }
+
+        &.button-close {
+            & > svg {
+                @apply stroke-50 stroke-gray-700 hover:stroke-red-700;
+            }
+        }
+
+        &:not(.button-table) {
+            @apply h-8;
+
+            & > svg {
+                @apply size-6;
+            }
+        }
+
+        &.button-table {
+            @apply hover:bg-sky-200 h-6;
+
+            & > svg {
+                @apply size-5;
+            }
+        }
+
+        &:not(.button-icon-only) {
+            @apply gap-0.5;
+
+            & > svg {
+                @apply size-5;
+            }
+        }
+
+        &.button-icon-only {
+            @apply p-1;
+        }
+    }
+}
