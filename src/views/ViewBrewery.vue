@@ -1,29 +1,25 @@
 ﻿<script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import BaseDialog from "@/components/BaseDialog.vue";
 import BaseLink from "@/components/BaseLink.vue";
 import FieldDisplay from "@/components/FieldDisplay.vue";
 import LinkGoogleMap from "@/components/LinkGoogleMap.vue";
 import { viewBreweries } from "@/router.ts";
-import { getActiveBreweryRecord, loadBreweryRecord, setActiveBrewery } from "@/stores/breweries.ts";
+import { useLoadBrewery } from "@/stores/api.ts";
+import { getActiveBreweryRecord, setActiveBrewery } from "@/stores/breweries.ts";
 import { useAppDispatch, useAppSelector } from "@/stores/main.ts";
 
 export interface IViewBreweryProps {
 	breweryId: string;
 }
 
-const { breweryId } = defineProps<IViewBreweryProps>();
+const props = defineProps<IViewBreweryProps>();
 const dispatch = useAppDispatch();
 const viewRecord = useAppSelector(getActiveBreweryRecord);
 const open = ref(true);
+const breweryId = computed(() => props.breweryId);
 
-watch(() => breweryId, ($breweryId) => {
-	if ($breweryId) {
-		dispatch(loadBreweryRecord($breweryId));
-	}
-}, {
-	immediate: true,
-});
+useLoadBrewery(breweryId);
 
 watch(open, ($open) => {
 	if (!$open) {
