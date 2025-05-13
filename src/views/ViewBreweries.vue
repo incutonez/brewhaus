@@ -7,17 +7,19 @@ import { IconNext, IconPrevious, IconView } from "@/components/Icons.ts";
 import LoadingMask from "@/components/LoadingMask.vue";
 import TableData from "@/components/TableData.vue";
 import { viewBrewery } from "@/router.ts";
-import { getBreweryRecords, getLoadingStatus, loadBreweryRecords } from "@/stores/breweries.ts";
-import { useAppDispatch, useAppSelector } from "@/stores/main.ts";
+import { useLoadBreweries } from "@/stores/api.ts";
+import { getBreweryRecords, getLoadingStatus } from "@/stores/breweries.ts";
+import { useAppSelector } from "@/stores/main.ts";
 import type { IBrewery } from "@/types/api.ts";
 import { useTableData } from "@/utils/table.ts";
 import CellGoogleMap from "@/views/breweries/CellGoogleMap.vue";
 
-const dispatch = useAppDispatch();
 const searchValid = ref(true);
 const page = ref(1);
+const perPage = ref(10);
 const records = useAppSelector(getBreweryRecords);
 const loading = useAppSelector(getLoadingStatus);
+const enableLoading = ref(false);
 const { table, sorting, search } = useTableData<IBrewery>({
 	serverSide: true,
 	data: records,
@@ -68,6 +70,7 @@ const { table, sorting, search } = useTableData<IBrewery>({
 		},
 	}],
 });
+useLoadBreweries(page, perPage, search, sorting, enableLoading);
 
 function onClickPrevious() {
 	page.value--;
@@ -81,30 +84,9 @@ function onSearchEnd(value: string) {
 	search.value = value;
 }
 
-watch([sorting, page, search], ([$sorting = [], $page, $search], [_$soringPrevious, _$pagePrevious, $searchPrevious]) => {
-	if (!searchValid.value) {
-		return;
-	}
-	// Reset the page whenever the search changes
-	if ($search !== $searchPrevious && $page !== 1) {
-		page.value = 1;
-		// We return because this watcher will be triggered again from setting this
-		return;
-	}
-	const [first] = $sorting;
-	// If we set it as undefined, the property won't be sent in the request, which is what we want
-	let sort = undefined;
-	if (first) {
-		sort = `${first.id}:${first.desc ? "desc" : "asc"}`;
-	}
-	dispatch(loadBreweryRecords({
-		sort,
-		page: $page,
-		search: $search,
-	}));
+watch(searchValid, ($searchValid) => enableLoading.value = $searchValid, {
+	immediate: true,
 });
-
-dispatch(loadBreweryRecords({}));
 </script>
 
 <template>
