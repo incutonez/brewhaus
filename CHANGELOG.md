@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/incutonez/brewhaus/compare/v1.1.0...v1.2.0) (2025-05-13)
+
+### Features
+
+* Adding Caching ([bdd8470](https://github.com/incutonez/brewhaus/commit/bdd84709bb540a8c5e04053efc66f3617def8a54))
+* Adding Caching ([#4](https://github.com/incutonez/brewhaus/issues/4)) ([980a690](https://github.com/incutonez/brewhaus/commit/980a69062a8a82d595456cef842fd3565ed86ced))
+
 ## [1.1.0](https://github.com/incutonez/brewhaus/compare/v1.0.0...v1.1.0) (2025-05-13)
 
 ### Features
